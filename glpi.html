@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuration de GLPI et OCS Inventory</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Configuration de GLPI & OCS Inventory NG</h1>
+    </header>
+    <nav>
+        <a href="index.html">Retour à l'accueil</a>
+    </nav>
+    <main>
+        <h2>Installation d'OCS Inventory NG</h2>
+        <ol>
+            <li>Installez les dépendances nécessaires :</li>
+            <pre>
+sudo apt install apache2 mariadb-server php libapache2-mod-perl2 ...
+            </pre>
+            <li>Téléchargez et installez OCS :</li>
+            <pre>
+wget https://github.com/OCSInventory-NG/...
+tar xvzf OCSNG_UNIX_SERVER-2.10.0.tar.gz
+sudo ./setup.sh
+            </pre>
+        </ol>
+        <h2>Installation de GLPI</h2>
+        <ol>
+            <li>Créez une base de données :</li>
+            <pre>
+CREATE DATABASE dbglpi;
+GRANT ALL PRIVILEGES ON dbglpi.* TO 'glpiuser'@'localhost' IDENTIFIED BY 'password';
+            </pre>
+            <li>Installez GLPI :</li>
+            <pre>
+wget https://github.com/glpi-project/glpi/releases/download/...
+tar xvzf glpi-10.0.3.tgz -C /var/www/html
+sudo chown -R www-data:www-data /var/www/html/glpi
+            </pre>
+        </ol>
+    </main>
+    <footer>
+        <p>&copy; 2025 - Documentation par Noa</p>
+    </footer>
+</body>
+</html>

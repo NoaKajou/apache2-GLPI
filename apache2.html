@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuration d'Apache2</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Configuration d'Apache2</h1>
+    </header>
+    <nav>
+        <a href="index.html">Retour à l'accueil</a>
+    </nav>
+    <main>
+        <h2>Installation d'Apache2</h2>
+        <p>Pour installer Apache2, utilisez les commandes suivantes :</p>
+        <pre>
+sudo apt update && sudo apt upgrade -y
+sudo apt install apache2 -y
+sudo systemctl status apache2
+        </pre>
+        <h2>Structure des fichiers</h2>
+        <p>Les fichiers principaux d'Apache2 se trouvent dans :</p>
+        <ul>
+            <li><code>/etc/apache2/apache2.conf</code></li>
+            <li><code>/etc/apache2/sites-available</code></li>
+        </ul>
+        <h2>Sécurisation</h2>
+        <p>Pour masquer les informations sensibles :</p>
+        <pre>
+sudo nano /etc/apache2/conf-enabled/security.conf
+# Modifier :
+ServerTokens Prod
+ServerSignature Off
+        </pre>
+        <p>Pensez à redémarrer Apache après chaque modification :</p>
+        <pre>sudo systemctl restart apache2</pre>
+    </main>
+    <footer>
+        <p>&copy; 2025 - Documentation par Noa</p>
+    </footer>
+</body>
+</html>
