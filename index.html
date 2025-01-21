@@ -3,107 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Documentation Apache2</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Menu Apache2 et GLPI</title>
+    <link rel="stylesheet" href="style.css"> <!-- Lien vers le fichier CSS -->
 </head>
 <body>
-    <nav>
-        <a href="#introduction">Introduction</a>
-        <a href="#installation">Installation</a>
-        <a href="#arborescence">Arborescence</a>
-        <a href="#processus">Processus Apache</a>
-        <a href="#virtualhosts">Hôtes Virtuels</a>
-        <a href="#securite">Sécurisation</a>
-        <a href="#php">Utilisation de PHP</a>
-    </nav>
 
-    <h1>Documentation Apache2</h1>
+<nav>
+    <a href="http://localhost/apache2" target="_blank">Apache2</a>
+    <a href="http://localhost/glpi" target="_blank">GLPI</a>
+</nav>
 
-    <section id="introduction">
-        <h2>Introduction</h2>
-        <p>Apache est le serveur web le plus utilisé au monde. Connu pour sa stabilité et sa flexibilité, il propose de nombreuses fonctionnalités à travers des modules tels que MPM (event, worker, prefork). Son concurrent principal est Nginx.</p>
-        <p>Pour plus d'informations, consultez le site officiel : <a href="https://httpd.apache.org" target="_blank">Apache HTTP Server</a>.</p>
-    </section>
+<section>
+    <h2>Bienvenue sur votre menu</h2>
+    <p>Cliquez sur les liens ci-dessus pour accéder à Apache2 ou GLPI.</p>
+</section>
 
-    <section id="installation">
-        <h2>Installation d'Apache2</h2>
-        <p>Pour installer Apache2 sur une machine Linux :</p>
-        <pre><code>sudo apt-get update
-sudo apt-get install apache2</code></pre>
-        <p>Une fois installé, vérifiez son fonctionnement en accédant à <a href="http://localhost" target="_blank">http://localhost</a>.</p>
-    </section>
+<footer>
+    <p>&copy; 2025 NoaKajou - Tous droits réservés</p>
+</footer>
 
-    <section id="arborescence">
-        <h2>Arborescence des fichiers Apache2</h2>
-        <p>Voici les principaux répertoires utilisés par Apache2 :</p>
-        <ul>
-            <li><code>/usr/sbin/apache2</code> : Exécutable principal.</li>
-            <li><code>/etc/apache2</code> : Fichiers de configuration.</li>
-            <li><code>/usr/lib/apache2</code> : Bibliothèques partagées.</li>
-            <li><code>/usr/share/apache2</code> : Fichiers partagés.</li>
-            <li><code>/usr/share/man/man8/apache2.8.gz</code> : Documentation man.</li>
-        </ul>
-    </section>
-
-    <section id="processus">
-        <h2>Les processus d'Apache</h2>
-        <p>Apache utilise trois types de modules MPM pour gérer les connexions :</p>
-        <ul>
-            <li><strong>Event</strong> : Module par défaut, performant et optimisé pour les connexions keepalive.</li>
-            <li><strong>Worker</strong> : Chaque processus gère plusieurs connexions en threads.</li>
-            <li><strong>Prefork</strong> : Chaque connexion utilise un processus distinct, gourmand en mémoire.</li>
-        </ul>
-        <p>Utilisez la commande suivante pour afficher le module actif :</p>
-        <pre><code>a2query -M</code></pre>
-        <p>Pour activer un module :</p>
-        <pre><code>sudo a2enmod [nom_du_module]</code></pre>
-        <p>Pour désactiver un module :</p>
-        <pre><code>sudo a2dismod [nom_du_module]</code></pre>
-    </section>
-
-    <section id="virtualhosts">
-        <h2>Gestion des Hôtes Virtuels</h2>
-        <p>Apache permet de gérer plusieurs sites web via des hôtes virtuels :</p>
-        <pre><code>&lt;VirtualHost *:80&gt;
-    ServerName www.example.com
-    DocumentRoot /var/www/example
-&lt;/VirtualHost&gt;</code></pre>
-        <p>Pour activer un hôte virtuel :</p>
-        <pre><code>sudo a2ensite example.conf
-sudo systemctl reload apache2</code></pre>
-    </section>
-
-    <section id="securite">
-        <h2>Sécurisation d'Apache2</h2>
-        <p>Pour masquer la version d'Apache et l'OS utilisé :</p>
-        <pre><code># Modifier /etc/apache2/conf-enabled/security.conf
-ServerTokens Prod
-ServerSignature Off</code></pre>
-        <p>Activez SSL pour sécuriser les communications :</p>
-        <pre><code>sudo a2enmod ssl
-sudo systemctl restart apache2</code></pre>
-    </section>
-
-    <section id="php">
-        <h2>Utilisation de PHP avec Apache2</h2>
-        <p>Deux méthodes principales existent pour exécuter des scripts PHP :</p>
-        <ul>
-            <li><strong>mod_php</strong> : simple mais moins performant.</li>
-            <li><strong>FPM</strong> : préféré pour sa performance et sa sécurité.</li>
-        </ul>
-        <p>Pour installer PHP avec FPM :</p>
-        <pre><code>sudo apt-get install php-fpm
-sudo a2enmod proxy_fcgi setenvif
-sudo systemctl restart apache2</code></pre>
-        <p>Configurez le fichier <code>sitka.conf</code> pour utiliser le socket Unix :</p>
-        <pre><code>&lt;FilesMatch \.php$&gt;
-    SetHandler "proxy:unix:/var/run/php/php7.4-fpm.sock|fcgi://localhost"
-&lt;/FilesMatch&gt;</code></pre>
-    </section>
-
-    <footer>
-        <p>Documentation rédigée a partir de ceci :</p>
-        <a href="apache2_tuto-1 (1).pdf" target="_blank">ce fichier pdf</a>
-    </footer>
 </body>
 </html>

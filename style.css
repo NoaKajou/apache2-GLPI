@@ -2,20 +2,25 @@ body {
     font-family: Arial, sans-serif;
     margin: 20px;
     line-height: 1.6;
+    background-color: #f9f9f9; /* Amélioration de l'arrière-plan */
 }
 nav {
     background: #333;
     color: #fff;
-    padding: 10px;
+    padding: 15px;
     text-align: center;
+    border-radius: 8px; /* Coins arrondis */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre subtile */
 }
 nav a {
     color: #fff;
     text-decoration: none;
-    margin: 0 10px;
+    margin: 0 15px;
+    font-size: 16px; /* Augmentation de la taille du texte */
 }
 nav a:hover {
     text-decoration: underline;
+    color: #4CAF50; /* Changement de couleur au survol */
 }
 section {
     margin-top: 20px;
@@ -30,4 +35,11 @@ pre {
     padding: 10px;
     border: 1px solid #ddd;
     overflow-x: auto;
+    border-radius: 4px; /* Coins arrondis pour un style plus doux */
+}
+footer {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 14px;
+    color: #777;
 }
