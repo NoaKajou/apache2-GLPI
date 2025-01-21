@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Configuration d'Apache2</title>
+    <title>Configuration Apache2</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -14,32 +14,31 @@
         <a href="index.html">Retour à l'accueil</a>
     </nav>
     <main>
-        <h2>Installation d'Apache2</h2>
-        <p>Pour installer Apache2, utilisez les commandes suivantes :</p>
-        <pre>
+        <section>
+            <h2>Installation</h2>
+            <pre>
 sudo apt update && sudo apt upgrade -y
 sudo apt install apache2 -y
 sudo systemctl status apache2
-        </pre>
-        <h2>Structure des fichiers</h2>
-        <p>Les fichiers principaux d'Apache2 se trouvent dans :</p>
-        <ul>
-            <li><code>/etc/apache2/apache2.conf</code></li>
-            <li><code>/etc/apache2/sites-available</code></li>
-        </ul>
-        <h2>Sécurisation</h2>
-        <p>Pour masquer les informations sensibles :</p>
-        <pre>
-sudo nano /etc/apache2/conf-enabled/security.conf
-# Modifier :
-ServerTokens Prod
-ServerSignature Off
-        </pre>
-        <p>Pensez à redémarrer Apache après chaque modification :</p>
-        <pre>sudo systemctl restart apache2</pre>
+            </pre>
+        </section>
+        <section>
+            <h2>Configuration des Hôtes Virtuels</h2>
+            <pre>
+<VirtualHost *:80>
+    ServerName www.mon-site.local
+    DocumentRoot /var/www/mon_site
+    <Directory /var/www/mon_site>
+        AllowOverride All
+    </Directory>
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+            </pre>
+        </section>
     </main>
     <footer>
-        <p>&copy; 2025 - Documentation par Noa</p>
+        <p>&copy; 2025 - Documentation Technique</p>
     </footer>
 </body>
 </html>
