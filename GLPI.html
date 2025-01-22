@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation OCS-GLPI</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav>
+        <a href="#introduction">Introduction</a>
+        <a href="#fonctionnement">Fonctionnement</a>
+        <a href="#topologie">Topologie</a>
+        <a href="#installation">Installation</a>
+        <a href="#inventaire">Inventaire des Machines</a>
+        <a href="#glpi">GLPI</a>
+        <a href="#synchronisation">Synchronisation OCS/GLPI</a>
+    </nav>
+
+    <h1>Documentation OCS-GLPI</h1>
+
+    <section id="introduction">
+        <h2>Introduction</h2>
+        <p>OCS Inventory NG (Open Computer and Software Inventory Next Generation) permet de réaliser un inventaire des configurations des machines, du réseau et des logiciels installés. 
+        L'application propose une interface web pour visualiser l'inventaire réalisé et gérer les paquets (installation de logiciels, fichiers à stocker sur les machines clients) via le protocole HTTP/HTTPS.</p>
+    </section>
+
+    <section id="fonctionnement">
+        <h2>Fonctionnement</h2>
+        <p>OCS Inventory repose sur une architecture client-serveur :</p>
+        <ul>
+            <li><strong>Serveur de communication :</strong> Collecte et archive les informations des clients. Utilise Apache, MySQL/MariaDB et PHP avec des modules PERL.</li>
+            <li><strong>Agent :</strong> Programme installé sur les clients (Windows, Linux, MacOS) pour remonter les informations au serveur.</li>
+            <li><strong>Serveur d'administration :</strong> Interface web en PHP pour consulter les inventaires et gérer les droits des utilisateurs.</li>
+            <li><strong>Serveur de déploiement :</strong> Permet le déploiement centralisé de logiciels et mises à jour.</li>
+        </ul>
+    </section>
+
+    <section id="topologie">
+        <h2>Topologie</h2>
+        <p>Configuration recommandée :</p>
+        <ul>
+            <li><strong>VM Debian :</strong>
+                <ul>
+                    <li>Hostname : OCS-GLPI</li>
+                    <li>Interface réseau 1 : ens33 (LAN, IP statique : 172.20.0.15/24)</li>
+                    <li>Interface réseau 2 : ens37 (NAT ou Bridged, DHCP)</li>
+                </ul>
+            </li>
+            <li><strong>VM Windows Client :</strong> IP : 172.20.0.100/24</li>
+        </ul>
+    </section>
+
+    <section id="installation">
+        <h2>Installation</h2>
+        <h3>LAMP</h3>
+        <p>Sur la VM Debian, installez Apache2, MariaDB et PHP :</p>
+        <pre><code>apt install apache2 mariadb-server php -y</code></pre>
+        <p>Ajoutez les librairies PERL et modules PHP :</p>
+        <pre><code>apt install -y libapache2-mod-perl2 libxml-simple-perl libnet-ip-perl libsoap-lite-perl 
+libapache2-mod-perl2-dev make php-mysql php-gd php-mbstring php-soap php-xml php-curl</code></pre>
+        <p>Installez les modules PERL :</p>
+        <pre><code>perl -MCPAN -e "install XML::Entities"
+cpan Apache2::SOAP
+cpan SOAP::Lite
+cpan Mojolicious::Lite
+cpan Switch</code></pre>
+
+        <h3>Téléchargement et Installation d'OCS Inventory NG</h3>
+        <p>Téléchargez et installez OCS Inventory NG :</p>
+        <pre><code>wget https://github.com/OCSInventory-NG/OCSInventory-ocsreports/releases/download/2.10.0/OCSNG_UNIX_SERVER-2.10.0.tar.gz
+
+tar xvzf OCSNG_UNIX_SERVER-2.10.0.tar.gz
+cd OCSNG_UNIX_SERVER-2.10.0
+./setup.sh</code></pre>
+        <p>Configurez l'installation en suivant les instructions affichées, en utilisant les valeurs par défaut pour la plupart des étapes.</p>
+    </section>
+
+    <section id="inventaire">
+        <h2>Inventaire des Machines</h2>
+        <h3>VM Debian</h3>
+        <p>Installez l'agent OCS sur la machine OCS-GLPI :</p>
+        <pre><code>apt install ocsinventory-agent</code></pre>
+        <p>Configurez l'agent pour pointer vers le serveur :</p>
+        <pre><code>http://172.20.0.15/ocsreports</code></pre>
+        <p>Lancez l'agent :</p>
+        <pre><code>ocsinventory-agent</code></pre>
+        <h3>VM Windows</h3>
+        <p>Téléchargez et installez l'agent OCS pour Windows :</p>
+        <pre><code>https://github.com/OCSInventory-NG/WindowsAgent/releases/download/2.9.2.0/OCS-Windows-Agent-2.9.2.0_x64.zip</code></pre>
+        <p>Configurez l'agent pour qu'il pointe vers le serveur :</p>
+        <pre><code>http://172.20.0.15/ocsinventory</code></pre>
+    </section>
+
+    <section id="glpi">
+        <h2>GLPI</h2>
+        <h3>Création de la Base de Données</h3>
+        <pre><code>mysql -u root
+create database dbglpi;
+grant all privileges on dbglpi.* to glpiuser identified by 'password';
+FLUSH PRIVILEGES;
+exit;</code></pre>
+        <h3>Installation de GLPI</h3>
+        <p>Téléchargez et installez GLPI :</p>
+        <pre><code>wget https://github.com/glpi-project/glpi/releases/download/10.0.3/glpi-10.0.3.tgz
+cd /var/www/html
+tar xvzf glpi-10.0.3.tgz
+chown -R www-data:www-data /var/www/html/glpi</code></pre>
+        <p>Installez les modules PHP nécessaires :</p>
+        <pre><code>apt install php-ldap php-imap php-xmlrpc php-apcu php-cas php-intl</code></pre>
+    </section>
+
+    <section id="synchronisation">
+        <h2>Synchronisation OCS/GLPI</h2>
+        <p>Installez le plugin de synchronisation :</p>
+        <pre><code>cd /var/www/html/glpi/plugins
+wget https://github.com/pluginsGLPI/ocsinventoryng/releases/download/2.0.2/glpi-ocsinventoryng-2.0.2.tar.bz2
+tar xvjf glpi-ocsinventoryng-2.0.2.tar.bz2</code></pre>
+        <p>Depuis l'interface de GLPI, activez le plugin et configurez le serveur OCS :</p>
+        <pre><code>Serveur : OCS NG
+Hôte : localhost
+Base de données : ocsweb
+Utilisateur : ocs
+Mot de passe : ocs</code></pre>
+        <p>Dans OCS Inventory, activez l'option TRACE_DELETED et importez les inventaires dans GLPI via le menu Outils &rarr; OCS Inventory NG.</p>
+    </section>
+
+    <footer>
+        <p>Documentation rédigée a partir de</p>
+        <a href="Tuto_OCS-GLPI.pdf">ce document</a>
+    </footer>
+</body>
+</html>
