@@ -1,45 +1,76 @@
+/* Styles de base */
 body {
     font-family: Arial, sans-serif;
-    margin: 20px;
     line-height: 1.6;
-    background-color: #f9f9f9; /* Amélioration de l'arrière-plan */
-}
-nav {
-    background: #333;
-    color: #fff;
-    padding: 15px;
-    text-align: center;
-    border-radius: 8px; /* Coins arrondis */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre subtile */
-}
-nav a {
-    color: #fff;
-    text-decoration: none;
-    margin: 0 15px;
-    font-size: 16px; /* Augmentation de la taille du texte */
-}
-nav a:hover {
-    text-decoration: underline;
-    color: #4CAF50; /* Changement de couleur au survol */
-}
-section {
-    margin-top: 20px;
-}
-h2 {
+    margin: 20px;
+    padding: 0;
+    background-color: #f9f9f9;
     color: #333;
-    border-bottom: 2px solid #333;
-    padding-bottom: 5px;
 }
-pre {
-    background: #f4f4f4;
-    padding: 10px;
-    border: 1px solid #ddd;
-    overflow-x: auto;
-    border-radius: 4px; /* Coins arrondis pour un style plus doux */
-}
-footer {
+
+/* Titres */
+h1 {
     text-align: center;
+    color: #0056b3;
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+h2 {
+    color: #007bff;
     margin-top: 30px;
-    font-size: 14px;
-    color: #777;
+    font-size: 1.5em;
+}
+
+ol {
+    margin-left: 20px;
+    padding-left: 0;
+}
+
+ul {
+    margin-left: 20px;
+    list-style-type: disc;
+}
+
+li {
+    margin-bottom: 8px;
+}
+
+/* Code blocks */
+code, pre {
+    font-family: Consolas, Monaco, monospace;
+    background: #e9ecef;
+    padding: 2px 6px;
+    border-radius: 5px;
+    color: #d63384;
+    font-size: 0.95em;
+}
+
+/* Boîte des blocs de code */
+pre {
+    background: #343a40;
+    color: #f8f9fa;
+    padding: 10px;
+    border-radius: 5px;
+    overflow: auto;
+    margin: 15px 0;
+}
+
+/* Liens */
+a {
+    color: #0056b3;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Marges entre les sections */
+h2 + ol {
+    margin-top: 10px;
+}
+
+h2 + ul {
+    margin-top: 10px;
 }
